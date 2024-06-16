@@ -4,7 +4,7 @@ The LOTUS Reader is a GUI primarily built to read and compile raw Empatica Embra
 # Installation
 1. Install Matlab 2023b or later (a compiled version is available for users without Matlab)
 2. Download and install python version 3.11.x prior to using LOTUS (https://www.python.org/downloads/)
-3. Install the avro library as recommended by Empatica using 'pip install avro'
+3. Install the avro python library as recommended by Empatica using 'pip install avro'
 4. Other python libraries (i.e., json, csv, and os) are also required but should be installed with python by default
 
 # To Use LOTUS Reader
