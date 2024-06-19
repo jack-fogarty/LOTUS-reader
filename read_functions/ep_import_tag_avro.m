@@ -47,7 +47,9 @@ function [cfg,dat] = ep_import_tag_avro(cfg,d,s,subs,span)
                 fname   = ['''' cfg.parent_folder '\' cfg.day_folders(d).name '\' subs{s} '\raw_data\v6\' files(t).name ''''];
                 fname   = insertAfter(fname,'\','\');
                 dtype   = '''tags''';
-                script  = ['pyrunfile("C:\Users\jfogarty\Desktop\Matlab\Empatica Data\EmbracePlus Toolkit\read_functions\ep_read_avro.py ' fname ' ' dtype '"'];
+                script_p = mfilename('fullpath');
+                script_p = script_p(1:end-length(mfilename));
+                script   = ['pyrunfile("' script_p 'ep_read_avro.py ' fname ' ' dtype '"'];
                 
                 % Run the actual code now the function is built
                 [dat,fs,timept] = eval([script ', ["data", "fs", "timept"])' ]);
@@ -106,7 +108,9 @@ function [cfg,dat] = ep_import_tag_avro(cfg,d,s,subs,span)
                 fname   = ['''' files(t).folder '\' files(t).name ''''];
                 fname   = insertAfter(fname,'\','\');
                 dtype   = '''tags''';
-                script  = ['pyrunfile("C:\Users\jfogarty\Desktop\Matlab\Empatica Data\EmbracePlus Toolkit\read_functions\ep_read_avro.py ' fname ' ' dtype '"'];
+                script_p = mfilename('fullpath');
+                script_p = script_p(1:end-length(mfilename));
+                script   = ['pyrunfile("' script_p 'ep_read_avro.py ' fname ' ' dtype '"'];
                 
                 % Run the actual code now the function is built
                 [dat,fs,timept] = eval([script ', ["data", "fs", "timept"])' ]);
