@@ -43,10 +43,12 @@ function [cfg,dat,summary] = ep_import_acc_avro(cfg,d,s,subs,span)
             for t = 1:length(files)
                 
                 % Construct the path strings for external calling of the python script and selected avro file
-                fname   = ['''' cfg.parent_folder '\' cfg.day_folders(d).name '\' subs{s} '\raw_data\v6\' files(t).name ''''];
-                fname   = insertAfter(fname,'\','\');
-                dtype   = '''acc''';
-                script  = ['pyrunfile("C:\Users\jfogarty\Desktop\Matlab\Empatica Data\EmbracePlus Toolkit\read_functions\ep_read_avro.py ' fname ' ' dtype '"'];
+                fname    = ['''' cfg.parent_folder '\' cfg.day_folders(d).name '\' subs{s} '\raw_data\v6\' files(t).name ''''];
+                fname    = insertAfter(fname,'\','\');
+                dtype    = '''acc''';
+                script_p = mfilename('fullpath');
+                script_p = script_p(1:end-length(mfilename));
+                script   = ['pyrunfile("' script_p 'ep_read_avro.py ' fname ' ' dtype '"'];
                 
                 % Run the actual code now the function is built
                 [x, y, z, fs, timept] = eval([script ', ["x", "y", "z", "fs", "timept"])' ]);
@@ -116,7 +118,9 @@ function [cfg,dat,summary] = ep_import_acc_avro(cfg,d,s,subs,span)
                 fname   = ['''' files(t).folder '\' files(t).name ''''];
                 fname   = insertAfter(fname,'\','\');
                 dtype   = '''acc''';
-                script  = ['pyrunfile("C:\Users\jfogarty\Desktop\Matlab\Empatica Data\EmbracePlus Toolkit\read_functions\ep_read_avro.py ' fname ' ' dtype '"'];
+                script_p = mfilename('fullpath');
+                script_p = script_p(1:end-length(mfilename));
+                script   = ['pyrunfile("' script_p 'ep_read_avro.py ' fname ' ' dtype '"'];
                 
                 % Run the actual code now the function is built
                 [x, y, z, fs, timept] = eval([script ', ["x", "y", "z", "fs", "timept"])' ]);
