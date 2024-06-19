@@ -81,10 +81,10 @@ function lotus_dark(app)
     app.TimespanPanel.BackgroundColor         = Shade2;
 
     % Back panels
-    app.LOTUSReaderUIFigure.Color   = Shade1;
-    app.GridLayout.BackgroundColor  = Shade1;
-    app.InputButton.BackgroundColor = Shade1;
-    app.DataPanel.BackgroundColor   = Shade1;
+    app.LOTUS_readerUIFigure.Color   = Shade1;
+    app.GridLayout.BackgroundColor   = Shade1;
+    app.InputButton.BackgroundColor  = Shade1;
+    app.DataPanel.BackgroundColor    = Shade1;
 
     else
     
@@ -151,10 +151,10 @@ function lotus_dark(app)
     app.TimespanPanel.BackgroundColor         = Shade3;
 
     % Back panels
-    app.LOTUSReaderUIFigure.Color   = Shade1;
-    app.GridLayout.BackgroundColor  = Shade1;
-    app.InputButton.BackgroundColor = Shade1;
-    app.DataPanel.BackgroundColor   = Shade1;
+    app.LOTUS_readerUIFigure.Color   = Shade1;
+    app.GridLayout.BackgroundColor   = Shade1;
+    app.InputButton.BackgroundColor  = Shade1;
+    app.DataPanel.BackgroundColor    = Shade1;
     
     end
 end
