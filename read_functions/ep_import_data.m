@@ -27,7 +27,7 @@ function ep_import_data(app)
     % Start 'app busy' symbol
     app.loadus.ImageSource = 'images/loadus_black.gif';
     drawnow;
-    figure(app.LOTUSReaderUIFigure)
+    figure(app.LOTUS_readerUIFigure)
     
     % Prime data structure
     pdat.EDA     = []; % Electrodermal data
