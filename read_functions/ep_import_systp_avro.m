@@ -185,7 +185,6 @@ function [cfg,dat,summary] = ep_import_systp_avro(cfg,d,s,subs,span)
                         summary{e,1} = [array2table(dur,"VariableNames","SystP duration") array2table(pts,"VariableNames","SystP pts") array2table(Pnan,"VariableNames","SystP % Missing")];
                         clear dur pts Pnan
                     else
-                        dat = [];
                         summary{e,1} = {};
                     end
     
