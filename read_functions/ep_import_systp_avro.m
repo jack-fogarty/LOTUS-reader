@@ -40,14 +40,14 @@ function [cfg,dat,summary] = ep_import_systp_avro(cfg,d,s,subs,span)
         case 'Default'
     
             % Read in all relevant files for this modality
-            files  = dir(fullfile([cfg.parent_folder '\' cfg.day_folders(d).name '\' subs{s} '\raw_data\v6\*.avro']));
+            files  = dir(fullfile([cfg.parent_folder filesep cfg.day_folders(d).name filesep subs{s} filesep 'raw_data' filesep 'v6' filesep '*.avro']));
 
             tmp = [];
             for t = 1:length(files)
                 
                 % Construct the path strings for external calling of the python script and selected avro file
-                fname    = ['''' cfg.parent_folder '\' cfg.day_folders(d).name '\' subs{s} '\raw_data\v6\' files(t).name ''''];
-                fname    = insertAfter(fname,'\','\');
+                fname    = ['''' cfg.parent_folder filesep cfg.day_folders(d).name filesep subs{s} filesep 'raw_data' filesep 'v6' filesep files(t).name ''''];
+                fname    = insertAfter(fname,filesep,filesep);
                 dtype    = '''systp''';
                 script_p = mfilename('fullpath');
                 script_p = script_p(1:end-length(mfilename));
@@ -107,7 +107,7 @@ function [cfg,dat,summary] = ep_import_systp_avro(cfg,d,s,subs,span)
             tmp   = [];
             files = [];           
             for d = 1:length(cfg.day_folders)
-                tmp = dir(fullfile([cfg.parent_folder '\' cfg.day_folders(d).name '\' cfg.selected_subjects{s} '\raw_data\v6\*.avro']));
+                tmp = dir(fullfile([cfg.parent_folder filesep cfg.day_folders(d).name filesep cfg.selected_subjects{s} filesep 'raw_data' filesep 'v6' filesep '*.avro']));
                 if isempty(files)
                    files = tmp;
                 else
@@ -121,9 +121,9 @@ function [cfg,dat,summary] = ep_import_systp_avro(cfg,d,s,subs,span)
             for t = 1:length(files)
                 
                 % Construct the path strings for external calling of the python script and selected avro file
-                fname    = ['''' files(t).folder '\' files(t).name ''''];
-                fname    = insertAfter(fname,'\','\');
-                dtype    = '''systp''';
+                fname   = ['''' files(t).folder filesep files(t).name ''''];
+                fname   = insertAfter(fname,filesep,filesep);
+                dtype   = '''systp''';
                 script_p = mfilename('fullpath');
                 script_p = script_p(1:end-length(mfilename));
                 script   = ['pyrunfile("' script_p 'ep_read_avro.py ' fname ' ' dtype '"'];

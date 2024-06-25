@@ -32,15 +32,15 @@ function [cfg,dat,summary] = ep_import_bvp(cfg,d,s,subs,span)
         case 'Default'
     
             % Read in all relevant files for this modality
-            files  = dir(fullfile([cfg.parent_folder '\' cfg.day_folders(d).name '\' subs{s} '\bvp*']));
+            files  = dir(fullfile([cfg.parent_folder filesep cfg.day_folders(d).name filesep subs{s} filesep 'bvp*']));
 
             % Stitch the relevant data together
             tmp = [];
             for i = 1:length({files.name})
                 if isempty(tmp)
-                   tmp = readmatrix([files(i).folder '\' files(i).name]);
+                   tmp = readmatrix([files(i).folder filesep files(i).name]);
                 else
-                   dat = readmatrix([files(i).folder '\' files(i).name]);
+                   dat = readmatrix([files(i).folder filesep files(i).name]);
                    tmp = [tmp; dat];
                    clear dat
                 end
@@ -58,7 +58,7 @@ function [cfg,dat,summary] = ep_import_bvp(cfg,d,s,subs,span)
                             
                 % Record summary: duration and padding stats based on NaNs
                 %%% Currently the fraction of data does not represent cases where padding is not selected
-                dur  = data.local_time(end)- data.local_time(1); dur.Format = 'dd:hh:mm:ss.SSS'; % Full length of recording
+                dur  = data.local_time(end) - data.local_time(1); dur.Format = 'dd:hh:mm:ss.SSS'; % Full length of recording
                 pts  = length(data.data);
                 Pnan = sum(isnan(data.data))/length(data.data)*100; % Percent of selected period missing (nan)
                 summary{1,1} = [array2table(dur,"VariableNames","BVP duration") array2table(pts,"VariableNames","BVP pts") array2table(Pnan,"VariableNames","BVP % Missing")];
@@ -79,7 +79,7 @@ function [cfg,dat,summary] = ep_import_bvp(cfg,d,s,subs,span)
             tmp   = [];
             files = [];           
             for d = 1:length(cfg.day_folders)
-                tmp = dir(fullfile([cfg.day_folders(d).folder '\' cfg.day_folders(d).name '\' cfg.selected_subjects{s} '\bvp*']));
+                tmp = dir(fullfile([cfg.day_folders(d).folder filesep cfg.day_folders(d).name filesep cfg.selected_subjects{s} filesep 'bvp*']));
                 if isempty(files)
                    files = tmp;
                 else
@@ -92,9 +92,9 @@ function [cfg,dat,summary] = ep_import_bvp(cfg,d,s,subs,span)
             tmp = [];
             for i = 1:length({files.name})
                 if isempty(tmp)
-                   tmp = readmatrix([files(i).folder '\' files(i).name]);
+                   tmp = readmatrix([files(i).folder filesep files(i).name]);
                 else
-                   dat = readmatrix([files(i).folder '\' files(i).name]);
+                   dat = readmatrix([files(i).folder filesep files(i).name]);
                    tmp = [tmp; dat];
                    clear dat
                 end

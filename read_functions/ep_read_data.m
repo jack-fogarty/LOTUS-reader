@@ -52,7 +52,7 @@ function [cfg] = ep_read_data(cfg)
             for d = 1:length({day_folders.name})
 
                 % Subject folders
-                subs = dir([cfg.parent_folder '\' day_folders(d).name]);
+                subs = dir([cfg.parent_folder filesep day_folders(d).name]);
                 subs = subs(~ismember({subs.name},{'.','..'}));
 
                 % EmbracePlus subject pattern

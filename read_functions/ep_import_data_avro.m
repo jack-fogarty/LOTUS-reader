@@ -25,7 +25,7 @@ function ep_import_data_avro(app)
     cfg.output_folder = uigetdir(cfg.parent_folder,'Select output folder');
 
     % Start 'app busy' symbol
-    app.loadus.ImageSource = 'images/loadus_black.gif';
+    app.loadus.ImageSource = ['images' filesep 'loadus_black.gif'];
     drawnow;
     figure(app.LOTUS_readerUIFigure)
 
@@ -54,7 +54,7 @@ function ep_import_data_avro(app)
             for d = 1:length({cfg.day_folders.name})
 
                 % Identify the selected subjects for this day (for loop efficiency)
-                idx  = dir([cfg.parent_folder '\' cfg.day_folders(d).name]);
+                idx  = dir([cfg.parent_folder filesep cfg.day_folders(d).name]);
                 idx  = idx(~ismember({idx.name},{'.','..'}));
                 subs = cfg.selected_subjects(ismember(cfg.selected_subjects, {idx.name}));
                 clear idx
@@ -428,7 +428,7 @@ function ep_import_data_avro(app)
     end
 
     % Update app loading symbol
-    app.loadus.ImageSource = 'images/Static.png';
+    app.loadus.ImageSource = ['images' filesep 'Static.png'];
     drawnow;
 
 end

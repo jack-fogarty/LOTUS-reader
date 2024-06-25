@@ -32,15 +32,15 @@ function [cfg,dat,summary] = ep_import_temp(cfg,d,s,subs,span)
         case 'Default'
     
             % Read in all relevant files for this modality
-            files  = dir(fullfile([cfg.parent_folder '\' cfg.day_folders(d).name '\' subs{s} '\temperature*']));
+            files  = dir(fullfile([cfg.parent_folder filesep cfg.day_folders(d).name filesep subs{s} filesep 'temperature*']));
 
             % Stitch the relevant data together
             tmp = [];
             for i = 1:length({files.name})
                 if isempty(tmp)
-                   tmp = readmatrix([files(i).folder '\' files(i).name]);
+                   tmp = readmatrix([files(i).folder filesep files(i).name]);
                 else
-                   dat = readmatrix([files(i).folder '\' files(i).name]);
+                   dat = readmatrix([files(i).folder filesep files(i).name]);
                    tmp = [tmp; dat];
                    clear dat
                 end
@@ -79,7 +79,7 @@ function [cfg,dat,summary] = ep_import_temp(cfg,d,s,subs,span)
             tmp   = [];
             files = [];           
             for d = 1:length(cfg.day_folders)
-                tmp = dir(fullfile([cfg.day_folders(d).folder '\' cfg.day_folders(d).name '\' cfg.selected_subjects{s} '\temperature*']));
+                tmp = dir(fullfile([cfg.day_folders(d).folder filesep cfg.day_folders(d).name filesep cfg.selected_subjects{s} filesep 'temperature*']));
                 if isempty(files)
                    files = tmp;
                 else
@@ -92,9 +92,9 @@ function [cfg,dat,summary] = ep_import_temp(cfg,d,s,subs,span)
             tmp = [];
             for i = 1:length({files.name})
                 if isempty(tmp)
-                   tmp = readmatrix([files(i).folder '\' files(i).name]);
+                   tmp = readmatrix([files(i).folder filesep files(i).name]);
                 else
-                   dat = readmatrix([files(i).folder '\' files(i).name]);
+                   dat = readmatrix([files(i).folder filesep files(i).name]);
                    tmp = [tmp; dat];
                    clear dat
                 end

@@ -31,12 +31,12 @@ function [cfg,dat] = ep_import_tag(cfg,d,s,subs,span)
         case 'Default'
     
             % Read in all relevant files for this modality
-            files  = dir(fullfile([cfg.parent_folder '\' cfg.day_folders(d).name '\' subs{s} '\tags*']));
+            files  = dir(fullfile([cfg.parent_folder filesep cfg.day_folders(d).name filesep subs{s} filesep 'tags*']));
 
             % Read and check all tags
             data = [];
             for t = 1:length(files)
-                tmp = readmatrix([cfg.parent_folder '\' cfg.day_folders(d).name '\' subs{s} '\' files(t).name]);
+                tmp = readmatrix([cfg.parent_folder filesep cfg.day_folders(d).name filesep subs{s} filesep files(t).name]);
                 if ~isnan(tmp)
                    utime = [table(cellstr(repmat(files(t).name(6:15),size(tmp))),'VariableNames',{'UTC_FileTime'})]; % File times in UTC
                    rtime = [table(repmat(datetime(str2double(files(t).name(6:15)), 'convertfrom', 'posixtime', 'Format', 'MM/dd/yy HH:mm:ss.SSS','TimeZone',cfg.TimeZone),size(tmp)),'VariableNames',{'TZ_FileTime'}) table(datetime(tmp/PSX, 'convertfrom', 'posixtime', 'Format', 'MM/dd/yy HH:mm:ss.SSS','TimeZone',cfg.TimeZone),'VariableNames',{'TZ_TagTime'})];  % File and tag times in Timezone
@@ -63,7 +63,7 @@ function [cfg,dat] = ep_import_tag(cfg,d,s,subs,span)
             tmp   = [];
             files = [];           
             for d = 1:length(cfg.day_folders)
-                tmp = dir(fullfile([cfg.day_folders(d).folder '\' cfg.day_folders(d).name '\' cfg.selected_subjects{s} '\tag*']));
+                tmp = dir(fullfile([cfg.day_folders(d).folder filesep cfg.day_folders(d).name filesep cfg.selected_subjects{s} filesep 'tag*']));
                 if isempty(files)
                    files = tmp;
                 else
@@ -75,7 +75,7 @@ function [cfg,dat] = ep_import_tag(cfg,d,s,subs,span)
             % Read and check all tags
             dat = [];
             for t = 1:length(files)
-                tmp = readmatrix([files(t).folder '\' files(t).name]);
+                tmp = readmatrix([files(t).folder filesep files(t).name]);
                 if ~isnan(tmp)
                    utime = [table(cellstr(repmat(files(t).name(6:15),size(tmp))),'VariableNames',{'UTC_FileTime'})]; % File and tag times in UTC
                    rtime = [table(repmat(datetime(str2double(files(t).name(6:15)), 'convertfrom', 'posixtime', 'Format', 'MM/dd/yy HH:mm:ss.SSS','TimeZone',cfg.TimeZone),size(tmp)),'VariableNames',{'TZ_FileTime'}) table(datetime(tmp/PSX, 'convertfrom', 'posixtime', 'Format', 'MM/dd/yy HH:mm:ss.SSS','TimeZone',cfg.TimeZone),'VariableNames',{'TZ_TagTime'})];  % File and tag times in Timezone
