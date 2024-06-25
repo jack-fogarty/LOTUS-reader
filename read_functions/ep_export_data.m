@@ -48,7 +48,7 @@ function ep_export_data(app,cfg,dat,d,s,subs)
         case 'Default'
                 
             % Output the mat file
-            save([cfg.output_folder '\' subs{s} '_' day_folders(d).name],'dat','cfg');
+            save([cfg.output_folder filesep subs{s} '_' day_folders(d).name],'dat','cfg');
 
             % Output data to excel files
 %             writetable(dat,[cfg.output_folder '\' subs(s).name '-' cfg.day_folders(d).name '-' 'Data' '.xlsx']);
@@ -56,7 +56,7 @@ function ep_export_data(app,cfg,dat,d,s,subs)
         case 'Custom'
                        
             % Output the mat file
-            save([cfg.output_folder '\' cfg.selected_subjects{s} '_Custom'],'dat','cfg');
+            save([cfg.output_folder filesep cfg.selected_subjects{s} '_Custom'],'dat','cfg');
 
             % Output data to excel files
 %             writetable(dat,[cfg.output_folder '\' subs(s).name '-Epoch-Data' '.xlsx']);
