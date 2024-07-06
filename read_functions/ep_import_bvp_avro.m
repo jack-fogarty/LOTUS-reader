@@ -99,7 +99,7 @@ function [cfg,dat,summary] = ep_import_bvp_avro(cfg,d,s,subs,span)
             tmp   = [];
             files = [];           
             for d = 1:length(cfg.day_folders)
-                tmp = dir(fullfile([cfg.parent_folder filesep cfg.day_folders(d).name filesep cfg.selected_subjects{s} filesep subs{s} filesep 'raw_data' filesep 'v6' filesep '*.avro']));
+                tmp = dir(fullfile([cfg.parent_folder filesep cfg.day_folders(d).name filesep cfg.selected_subjects{s} filesep 'raw_data' filesep 'v6' filesep '*.avro']));
                 if isempty(files)
                    files = tmp;
                 else
