@@ -200,9 +200,15 @@ function ep_import_data_avro(app)
                         continue
                     end
 
-                    % Erase tags if empty
+                    % Create empty tags table if empty but there is other data
                     if all(cellfun(@isempty,dat.Tags))
-                        dat.Tags = [];
+                        % dat.Tags = [];
+                        tags = table({[]},NaT,NaT,NaT,{''},'VariableNames',{'Tag','UTC_FileTime','TZ_FileTime','TZ_TagTime','Annotation'});
+                        tags.UTC_FileTime.TimeZone = cfg.TimeZone;
+                        tags.TZ_FileTime.TimeZone  = cfg.TimeZone;
+                        tags.TZ_TagTime.TimeZone   = cfg.TimeZone;
+                        tags(:,:) = [];
+                        dat.Tags = {tags};
                     end
 
                     % Export the epoched raw data
@@ -416,7 +422,20 @@ function ep_import_data_avro(app)
 
                     % Check the custom epochs are in sequential order
                     [cfg, dat] = ep_check_custom(cfg,dat);
-
+                    
+                    % Add empty tag tables where needed
+                    idx = find(cellfun(@isempty,dat.Tags));
+                    if ~isempty(idx)
+                        tags = table({[]},NaT,NaT,NaT,{''},'VariableNames',{'Tag','UTC_FileTime','TZ_FileTime','TZ_TagTime','Annotation'});
+                        tags.UTC_FileTime.TimeZone = cfg.TimeZone;
+                        tags.TZ_FileTime.TimeZone  = cfg.TimeZone;
+                        tags.TZ_TagTime.TimeZone   = cfg.TimeZone;
+                        tags(:,:) = [];
+                        for t = 1:length(idx)
+                            dat.Tags(idx(t)) = {tags};
+                        end
+                    end
+                    
                     % Export the epoched raw data
                     ep_export_data(app,cfg,dat,[],s,[])
 
