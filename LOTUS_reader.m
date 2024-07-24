@@ -80,7 +80,6 @@ classdef LOTUS_reader < matlab.apps.AppBase
 
     
     properties (Access = private)
-        % cfg           % Configuration variable holding key parameter values
         stop          % Marker to help 'break' GUI operation
         y             % Music
         Fs            % Music Fs
@@ -170,9 +169,6 @@ classdef LOTUS_reader < matlab.apps.AppBase
             % Position GUI in center screen
             movegui(app.LOTUS_readerUIFigure,'center')
             
-            % Path to app
-            % app.lpath = mfilename('fullpath');
-
             % Load possible timezones (clean this list for greater ease of selection)
             t = timezones('All');
             app.TimeZoneDropDown.Items = sort(t.Name);
@@ -180,10 +176,6 @@ classdef LOTUS_reader < matlab.apps.AppBase
             
             % Load cool times
             [app.y, app.Fs] = audioread('Working Class man.mp3');
-
-%%% Rather than add relative path to specific functions perhaps just add subfolder paths to Matlab path (will compiling make this redundant?)
-%%% To compile the app to be standalone
-% https://www.mathworks.com/matlabcentral/answers/1632835-can-i-make-a-standalone-app-designed-from-app-designer-so-that-it-runs-on-computers-without-matlab
 
         end
 
@@ -597,7 +589,6 @@ classdef LOTUS_reader < matlab.apps.AppBase
             app.NaNpadmax = uicheckbox(app.LOTUS_readerUIFigure);
             app.NaNpadmax.Text = 'NaN pad to max window length';
             app.NaNpadmax.Position = [13 74 188 22];
-            app.NaNpadmax.Value = true;
 
             % Create NaNpadCheckBox
             app.NaNpadCheckBox = uicheckbox(app.LOTUS_readerUIFigure);
