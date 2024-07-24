@@ -2,6 +2,7 @@
 %  Copyright (C) (2024) Jack Fogarty
 
 %%% Create an "output file name builder"
+%%% Adaptive way to get sample rates and store them alongside for preprocessing
 
 function ep_export_data(app,cfg,dat,d,s,subs)
 
@@ -55,11 +56,31 @@ function ep_export_data(app,cfg,dat,d,s,subs)
 
         case 'Custom'
                        
-            % Output the mat file
-            save([cfg.output_folder filesep cfg.selected_subjects{s} '_Custom'],'dat','cfg');
+            % Output recordings as separate files
+
+            % Make copy of data for referential store
+            tmp_dat = dat;
+
+            for t = 1:size(tmp_dat.Summary,1)
+                
+                % Collate data by day
+                        
+                    % Identify available non-empty fields
+                    fld = fieldnames(dat); 
+                    fld = fld(~structfun(@isempty,dat));
+
+                    % Loop and add relevant data to dat
+                    for f = 1:length(fld)
+                        eval(['dat.' fld{f} ' = tmp_dat.' fld{f} '(t,1);']);
+                    end
+                    
+                % Output the mat file
+                save([cfg.output_folder filesep cfg.selected_subjects{s} '_' replace(char(cfg.selected_days(t)),'/','-')],'dat','cfg');
 
             % Output data to excel files
-%             writetable(dat,[cfg.output_folder '\' subs(s).name '-Epoch-Data' '.xlsx']);
+            % writetable(dat,[cfg.output_folder '\' subs(s).name '-Epoch-Data' '.xlsx']); 
+
+            end
 
     end
 

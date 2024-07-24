@@ -424,6 +424,9 @@ function ep_import_data(app)
                     [cfg, dat] = ep_check_custom(cfg,dat);
 
                     % Add empty tag tables where needed
+                    if isempty(dat.Tags)
+                        dat.Tags = cell(3,1);
+                    end
                     idx = find(cellfun(@isempty,dat.Tags));
                     if ~isempty(idx)
                         tags = table({[]},NaT,NaT,NaT,{''},'VariableNames',{'Tag','UTC_FileTime','TZ_FileTime','TZ_TagTime','Annotation'});

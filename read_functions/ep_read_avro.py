@@ -22,7 +22,10 @@ match dtype:
         y        = acc["y"]
         z        = acc["z"]
         fs       = acc["samplingFrequency"]
-        timept   = [round(acc["timestampStart"] + i * (1e6 / acc["samplingFrequency"]))
+        if fs == 0:
+            fs = 64
+
+        timept   = [round(acc["timestampStart"] + i * (1e6 / fs))
         for i in range(len(acc["x"]))]
     case "gyr":
         # Gyroscope
@@ -31,21 +34,30 @@ match dtype:
         y        = gyro["y"]
         z        = gyro["z"]
         fs       = gyro["samplingFrequency"]
-        timept   = [round(gyro["timestampStart"] + i * (1e6 / gyro["samplingFrequency"]))
+        if fs == 0:
+            fs = 64
+
+        timept   = [round(gyro["timestampStart"] + i * (1e6 / fs))
         for i in range(len(gyro["values"]))]
     case "eda":
         # Eda
         eda      = dat["rawData"]["eda"]
         data     = eda["values"]
         fs       = eda["samplingFrequency"]
-        timept   = [round(eda["timestampStart"] + i * (1e6 / eda["samplingFrequency"]))
+        if fs == 0:
+            fs = 4
+
+        timept   = [round(eda["timestampStart"] + i * (1e6 / fs))
         for i in range(len(eda["values"]))]
     case "temp":
         # Temperature
         temp     = dat["rawData"]["temperature"]
         data     = temp["values"]
         fs       = temp["samplingFrequency"]
-        timept   = [round(temp["timestampStart"] + i * (1e6 / temp["samplingFrequency"]))
+        if fs == 0:
+            fs = 1
+
+        timept   = [round(temp["timestampStart"] + i * (1e6 / fs))
         for i in range(len(temp["values"]))]
     case "tags":
         # Tags
@@ -58,7 +70,10 @@ match dtype:
         bvp      = dat["rawData"]["bvp"]
         data     = bvp["values"]
         fs       = bvp["samplingFrequency"]
-        timept   = [round(bvp["timestampStart"] + i * (1e6 / bvp["samplingFrequency"]))
+        if fs == 0:
+            fs = 64
+            
+        timept   = [round(bvp["timestampStart"] + i * (1e6 / fs))
         for i in range(len(bvp["values"]))]
     case "systp":
         # Systolic peaks
@@ -71,5 +86,8 @@ match dtype:
         steps    = dat["rawData"]["steps"]
         data     = steps["values"]
         fs       = steps["samplingFrequency"]
-        timept   = [round(steps["timestampStart"] + i * (1e6 / steps["samplingFrequency"]))
+        # Cannot find this info at the moment
+        #if fs == 0:
+        #    fs = ?
+        timept   = [round(steps["timestampStart"] + i * (1e6 / fs))
         for i in range(len(steps["values"]))]

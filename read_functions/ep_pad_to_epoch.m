@@ -58,7 +58,7 @@ function [dat] = ep_pad_to_epoch(cfg,dat,Fs,PSX,span,day_idx,e)
                     % Get handles to *all* figures
                     allfigs = findall(0,'Type', 'figure'); 
                     % Isolate the app's handle based on the App's name and unique tag
-                    app2Handle = findall(allfigs, 'Name', 'EmbracePlusToolkit', 'Tag', 'ep_main_gui');
+                    app2Handle = findall(allfigs, 'Name', 'LOTUS_reader', 'Tag', 'LOTUS_reader');
                     
                     
                     % No path is specified. User needs to browse to parent folder
@@ -66,8 +66,6 @@ function [dat] = ep_pad_to_epoch(cfg,dat,Fs,PSX,span,day_idx,e)
                     uialert(app2Handle,'Timewindow and/or timespan parameters not set. User needs to define the custom epoch in the main GUI.','Warning')
                     
                     % Return to Main GUI
-                    % Ensure that stop is set back to zero at next attempt
-                    % stop = 1;
                     return                   
                 end
                 

@@ -422,11 +422,14 @@ function ep_import_data_avro(app)
 
                     % Check the custom epochs are in sequential order
                     [cfg, dat] = ep_check_custom(cfg,dat);
-                    
+
                     % Add empty tag tables where needed
+                    if isempty(dat.Tags)
+                        dat.Tags = cell(3,1);
+                    end
                     idx = find(cellfun(@isempty,dat.Tags));
                     if ~isempty(idx)
-                        tags = table({[]},NaT,NaT,NaT,{''},'VariableNames',{'Tag','UTC_FileTime','TZ_FileTime','TZ_TagTime','Annotation'});
+                        tags = table({0},NaT,NaT,NaT,{''},'VariableNames',{'Tag','UTC_FileTime','TZ_FileTime','TZ_TagTime','Annotation'});
                         tags.UTC_FileTime.TimeZone = cfg.TimeZone;
                         tags.TZ_FileTime.TimeZone  = cfg.TimeZone;
                         tags.TZ_TagTime.TimeZone   = cfg.TimeZone;
@@ -435,9 +438,9 @@ function ep_import_data_avro(app)
                             dat.Tags(idx(t)) = {tags};
                         end
                     end
-                    
+
                     % Export the epoched raw data
-                    ep_export_data(app,cfg,dat,[],s,[])
+                    ep_export_data(app,cfg,dat,[],s,[]);
 
                     % Reset dat
                     dat = pdat;
